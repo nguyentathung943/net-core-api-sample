@@ -18,17 +18,19 @@ namespace SampleApiService.Controllers
         {
             var forecastData = new List<WeatherForecast>();
             var limit = dataLimit;
+            var tempC = 0;
 
             for (int i = 0; i < limit; i++)
             {
+                tempC = Random.Shared.Next(-20, 55);
                 forecastData.Add(new()
                 {
                     Timestamp = DateTime.Now.ToString(),
                     Summary = $"Forecast {i}",
-                    TemperatureC = Random.Shared.Next(-20, 55)
+                    TemperatureC = tempC,
+                    TemperatureF = 32 + (int)(tempC / 0.5556)
                 });
             }
-
 
             return forecastData;
         }
