@@ -1,0 +1,36 @@
+using Microsoft.AspNetCore.Mvc;
+
+namespace SampleApiService.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class WeatherForecastController : ControllerBase
+    {
+        private readonly ILogger<WeatherForecastController> _logger;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        {
+            _logger = logger;
+        }
+
+        [HttpPost(Name = "GetWeatherForecast")]
+        public IEnumerable<WeatherForecast> Post([FromBody] int dataLimit)
+        {
+            var forecastData = new List<WeatherForecast>();
+            var limit = dataLimit;
+
+            for (int i = 0; i < limit; i++)
+            {
+                forecastData.Add(new()
+                {
+                    Timestamp = DateTime.Now.ToString(),
+                    Summary = $"Forecast {i}",
+                    TemperatureC = Random.Shared.Next(-20, 55)
+                });
+            }
+
+
+            return forecastData;
+        }
+    }
+}
